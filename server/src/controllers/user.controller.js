@@ -94,8 +94,8 @@ const verifyUserWithOTP = asyncHandler(async(req, res)=>{
     }
 
     const dbOTP = await OTP.findOne({otp})
-    
-    if (!dbOTP.otp) {
+  
+    if (!dbOTP) {
         return res.status(401).json({
             "success": false,
             "error": "Please enter valid otp"
@@ -120,6 +120,8 @@ const verifyUserWithOTP = asyncHandler(async(req, res)=>{
             new: true
         }
     )
+
+    // must delete otp doc after verification
 
     const {accesstoken, refreshtoken} = await generateAccessTokenAndRefreshToken(user._id)
 
@@ -155,9 +157,18 @@ const loginUser = asyncHandler(async(req, res)=>{
         })
     }
 
-    const {accesstoken, refreshtoken} = await generateAccessTokenAndRefreshToken(isUserExist._id)
-
     const user = await User.findById(isUserExist._id).select("-password")
+    
+    if (user.isVerified === false) {
+        return res
+        .status(403)
+        .json({
+            "success": false,
+            "message": "Please verify your account first"
+        })
+    }
+
+    const {accesstoken, refreshtoken} = await generateAccessTokenAndRefreshToken(isUserExist._id)
 
     return res
             .status(200)
