@@ -35,4 +35,4 @@ router.route("/update-profile").patch(
     updateUserProfile
 )
 
-export default router  
+export default router
