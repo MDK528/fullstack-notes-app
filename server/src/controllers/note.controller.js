@@ -139,10 +139,9 @@ const summarizeNote = asyncHandler(async(req, res)=>{
         user:req.user._id
     })
 
-    const user = await User.findOne(req.user_id).select("-password, -refreshToken")
+    const user = await User.findById(req.user._id)
     // console.log(req.user._id);
     // console.log(user);
-    
 
     if (!note) {
         return res.status(404).json({
