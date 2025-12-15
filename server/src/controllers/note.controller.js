@@ -1,6 +1,8 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { Note } from "../models/note.model.js"
 import { uploadOnCloudinary } from "../utils/cloudinary.js"
+import { GoogleGenAI } from "@google/genai"
+import { User } from "../models/user.model.js";
 
 const createNote = asyncHandler(async(req, res)=>{
     const {noteTitle, noteItem, completed, image} = req.body
@@ -131,4 +133,64 @@ const deleteNote = asyncHandler(async(req, res)=>{
             })
 })
 
-export {createNote, getNote, updateNote, deleteNote}
+const summarizeNote = asyncHandler(async(req, res)=>{
+    const note = await Note.findOne({
+        _id:req.params.id,
+        user:req.user._id
+    })
+
+    const user = await User.findOne(req.user_id).select("-password, -refreshToken")
+    // console.log(req.user._id);
+    // console.log(user);
+    
+
+    if (!note) {
+        return res.status(404).json({
+            "success": false,
+            "error": "No note found",
+        })
+    }
+
+    const genAi = new GoogleGenAI({
+        apiKey: process.env.GEMINI_API_KEY        
+    })
+
+    let response;
+    try {
+
+        if (note.noteItem.length < 50) {
+            return res.status(400).json({
+                "error": "Note is too short"
+            })
+        }
+
+        if (note.noteItem.length > 3000) {
+            return res.status(400).json({
+                "error": "Note is too long"
+            })
+        }
+        response = await genAi.models.generateContent({
+            model: "gemini-2.5-flash",
+            config: {
+                systemInstruction: `You are a assistant to summarize the note of a user. Always reply to user with name like, Hello ${user.fullName}` 
+            },
+            contents: `Summarize the note in simple words with 1-2 sentences,
+            Note Title: ${note.noteTitle}
+            Note Body: ${note.noteItem}
+            `,
+        })
+        // store the res and notetitle in aiHistory doc
+    } catch (error) {
+        console.error("Gemini Error:", error);
+        res.status(500).json({ error: "Gemini failed" });
+    }
+
+
+    return res.status(200).json({
+        "success": true,
+        "message": "Note Summarized Successfull",
+        "data": response.text
+    })
+})
+
+export {createNote, getNote, updateNote, deleteNote, summarizeNote}
