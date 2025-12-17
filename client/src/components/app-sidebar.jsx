@@ -1,17 +1,19 @@
 import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from "@/components/ui/sidebar"
-import Comp from "./Comp"
+import
+  {
+    Sidebar,
+    SidebarContent,
+    SidebarGroup,
+    SidebarGroupContent,
+    SidebarGroupLabel,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
+  } from "@/components/ui/sidebar"
+import Comp from "./ThemeBtn"
 
-export function AppSidebar() {
+export function AppSidebar()
+{
 
   // Menu items.
   const items = [
@@ -43,7 +45,7 @@ export function AppSidebar() {
   ]
 
   return (
-     <Sidebar>
+    <Sidebar>
       <SidebarContent >
         <SidebarGroup>
           <SidebarGroupLabel>Application</SidebarGroupLabel>
@@ -62,7 +64,7 @@ export function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
-        <Comp/>
+        <Comp />
       </SidebarContent>
     </Sidebar>
   )

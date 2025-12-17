@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { Button } from './ui/button.jsx'
 import { useTheme } from '@/context/context.js'
 
-function Comp() {
+function ThemeBtn() {
     const {themeMode, lightTheme, darkTheme} = useTheme()
 
     const toggleTheme = (e) => {
@@ -30,4 +30,4 @@ function Comp() {
     )
 }
 
-export default Comp
+export default ThemeBtn
