@@ -9,8 +9,8 @@ const validate = (schema) => {
         } catch (error) {
             if (error instanceof ZodError) {
                 return res.status(400).json({
-                    success: false,
-                    errors: error.issues[0].message,
+                    "success": false,
+                    "message": error.issues[0].message,
                 });
             }
         }

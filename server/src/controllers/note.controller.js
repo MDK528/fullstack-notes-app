@@ -12,7 +12,7 @@ const createNote = asyncHandler(async(req, res)=>{
                 .status(401)
                 .json({
                     "success": false,
-                    "error": "Fill your note body first"
+                    "message": "Fill your note body first"
                 })
     }
 
@@ -46,7 +46,7 @@ const getNote = asyncHandler(async(req, res)=>{
             .status(404)
             .json({
                 "success": false,
-                "error": "No Notes found",
+                "message": "No Notes found",
             })
     }
 
@@ -91,7 +91,7 @@ const updateNote = asyncHandler(async(req, res)=>{
                 .status(404)
                 .json({
                     "success": false,
-                    "error": "No note found or unauthorized access",
+                    "message": "No note found or unauthorized access",
                 })
     }
 
@@ -146,7 +146,7 @@ const summarizeNote = asyncHandler(async(req, res)=>{
     if (!note) {
         return res.status(404).json({
             "success": false,
-            "error": "No note found",
+            "message": "No note found",
         })
     }
 
@@ -159,13 +159,13 @@ const summarizeNote = asyncHandler(async(req, res)=>{
 
         if (note.noteItem.length < 50) {
             return res.status(400).json({
-                "error": "Note is too short"
+                "message": "Note is too short"
             })
         }
 
         if (note.noteItem.length > 3000) {
             return res.status(400).json({
-                "error": "Note is too long"
+                "message": "Note is too long"
             })
         }
         response = await genAi.models.generateContent({

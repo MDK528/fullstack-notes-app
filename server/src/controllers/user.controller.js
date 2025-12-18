@@ -38,7 +38,7 @@ const registerUser = asyncHandler(async(req, res)=>{
                 .status(409)
                 .json({
                     "success": false,
-                    "error": "User already exists with this email or username"
+                    "message": "User already exists with this email or username"
                 });
     }
 
@@ -89,7 +89,7 @@ const verifyUserWithOTP = asyncHandler(async(req, res)=>{
     if (!otp) {
         return res.status(404).json({
             "success": false,
-            "error": "Please enter your otp"
+            "message": "Please enter your otp"
         })
     }
 
@@ -98,14 +98,14 @@ const verifyUserWithOTP = asyncHandler(async(req, res)=>{
     if (!dbOTP) {
         return res.status(401).json({
             "success": false,
-            "error": "Please enter valid otp"
+            "message": "Please enter valid otp"
         })
     }
 
     if (new Date() > dbOTP.expiresAt) {
         return res.status(401).json({
             "success": false,
-            "error": "Your OTP expired"
+            "message": "Your OTP expired"
         })
     }
 
@@ -144,7 +144,7 @@ const loginUser = asyncHandler(async(req, res)=>{
     if (!isUserExist) {
         return res.status(404).json({
             "success": false,
-            "error": "User not found"
+            "message": "User not found"
         })
     }
 
@@ -153,7 +153,7 @@ const loginUser = asyncHandler(async(req, res)=>{
     if (!isValidPassword) {
         return res.status(401).json({
             "success": false,
-            "error": "Invalid Password"
+            "message": "Invalid Password"
         })
     }
 
@@ -208,6 +208,13 @@ const logoutUser = asyncHandler(async(req, res)=>{
 const fetchCurrentUser = asyncHandler(async(req, res)=>{
     const user = await User.findById(req.user._id).select("-password -refreshToken")
 
+    if (!user) {
+        return res.status(401).json({
+            "success": false,
+            "message": "Failed to fetch user"
+        })
+    }
+
     return res.status(200).json({
         "success": true,
         "message": "User account fetched successfully",
@@ -224,7 +231,7 @@ const changeCurrentPassword = asyncHandler(async(req, res)=>{
     if (!oldPassword || !newPassword) {
         return res.status(404).json({
             "success": false,
-            "error": "Please enter your password"
+            "message": "Please enter your password"
         })
     }
 
@@ -233,7 +240,7 @@ const changeCurrentPassword = asyncHandler(async(req, res)=>{
     if (!userOldPassword) {
         return res.status(400).json({
             "success": false,
-            "error": "Entered old password is invalid"
+            "message": "Entered old password is invalid"
         })
     }
 

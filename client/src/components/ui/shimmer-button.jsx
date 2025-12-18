@@ -4,11 +4,13 @@ import { cn } from "@/lib/utils"
 
 export const ShimmerButton = React.forwardRef((
   {
-    shimmerColor = "#EC0043",
+    // shimmerColor = "#f00540",
+    shimmerColor="#eb6586",
     shimmerSize = "0.05em",
     shimmerDuration = "2s",
     borderRadius = "100px",
-    background = "rgba(0, 0, 0, 1)",
+    background = "#400423",
+    // background="#2e051a",
     className,
     children,
     ...props

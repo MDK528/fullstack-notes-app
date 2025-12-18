@@ -29,7 +29,9 @@ function App({ children })
   }, [themeMode])
 
   return (
-    <Hero />
+    <ThemeProvider value={{ themeMode, darkTheme, lightTheme }}>
+      <Hero />
+    </ThemeProvider>
     // <div>
     //   {/* <ThemeProvider value={{ themeMode, darkTheme, lightTheme }}>
     //     <SidebarProvider>
