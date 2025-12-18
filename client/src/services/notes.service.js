@@ -9,9 +9,9 @@ const noteService = {
             throw new Error(error?.response?.data?.message || "Failed to create note")
         }
     },
-    getNote: async(id)=>{
+    getNotes: async()=>{
         try {
-            const res = await apiInstance.get(`/get-note/${id}`)
+            const res = await apiInstance.get("/notes")
             return res.data
         } catch (error) {
             throw new Error(error?.response?.data?.message || "Failed to fetch note")

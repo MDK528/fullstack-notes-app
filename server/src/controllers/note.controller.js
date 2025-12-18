@@ -37,7 +37,7 @@ const createNote = asyncHandler(async(req, res)=>{
             })
 })
 
-const getNote = asyncHandler(async(req, res)=>{
+const getNotes = asyncHandler(async(req, res)=>{
     const notes = await Note.find({user: req.user._id})
     // console.log(req.user._id);
     
@@ -192,4 +192,4 @@ const summarizeNote = asyncHandler(async(req, res)=>{
     })
 })
 
-export {createNote, getNote, updateNote, deleteNote, summarizeNote}
+export {createNote, getNotes, updateNote, deleteNote, summarizeNote}

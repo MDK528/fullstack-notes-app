@@ -27,7 +27,7 @@ const authService = {
     },
     logout: async ()=>{
         try {
-            const res = await apiInstance.post("/logout", credentials)
+            const res = await apiInstance.post("/logout")
             return res.data    
         } catch (error) {
             throw new Error ( error?.response?.data?.message || 'Logout failed' )
@@ -39,12 +39,14 @@ const authService = {
             const res = await apiInstance.get("/profile")
             return res.data
         } catch (error) {
-            throw new Error ( error?.response?.data?.message || 'Failed to fetch user profile' )
+            // throw new Error ( error?.response?.data?.message || 'Failed to fetch user profile' )
+            return null
         }
     },
     changePassword: async (passwords)=>{
         try {
             const res = await apiInstance.patch("/change-password", passwords)
+            return res.data
         } catch (error) {
             throw new Error ( error?.response?.data?.message || 'Failed to cahnge password' )
         }
@@ -57,7 +59,7 @@ const authService = {
             throw new Error ( error?.response?.data?.message || 'Failed to update user' )
         }
     },
-    isLoggeIn:  async()=>{
+    isLoggedIn:  async()=>{
         try {
             const res = await apiInstance.get("/profile")
             return !!res.data
