@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react'
-import ThemeBtn from './components/ThemeBtn.jsx'
 import { ThemeProvider } from './context/context.js'
-// sidebar
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import { AppSidebar } from "@/components/app-sidebar.jsx"
 import Hero from './components/Hero'
 
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import ProtectedRoute from './components/ProtectedRoute.jsx'
+import Note from './pages/Note.jsx'
 
-function App({ children })
+
+
+
+function App()
 {
 
   const [themeMode, setThemeMode] = useState(() => localStorage.getItem('currentTheme') || 'light')
@@ -30,19 +32,19 @@ function App({ children })
 
   return (
     <ThemeProvider value={{ themeMode, darkTheme, lightTheme }}>
-      <Hero />
+      {/* <BrowserRouter> */}
+        <Routes>
+          <Route path='/' element={<Hero />}/>
+          <Route 
+            path='/notes' 
+            element={ 
+            <ProtectedRoute> 
+              <Note/> 
+            </ProtectedRoute> 
+          }/>
+        </Routes>
+      {/* </BrowserRouter> */}
     </ThemeProvider>
-    // <div>
-    //   {/* <ThemeProvider value={{ themeMode, darkTheme, lightTheme }}>
-    //     <SidebarProvider>
-    //       <AppSidebar/>
-    //       <main>
-    //         <SidebarTrigger />
-    //         {children}
-    //       </main>
-    //     </SidebarProvider>
-    //   </ThemeProvider> */}
-    // </div>
   )
 }
 

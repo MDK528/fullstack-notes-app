@@ -3,7 +3,7 @@ import apiInstance from "./api.service";
 const authService = {
     register: async (userData)=>{
         try {
-            const res = await apiInstance.post("/register", userData)
+            const res = await apiInstance.post("/users/register", userData)
             return res.data
         } catch (error) {
             throw new Error ( error?.response?.data?.message || 'Registration failed' )
@@ -11,7 +11,7 @@ const authService = {
     },
     verifyOTP: async (otp)=>{
         try {
-            const res = await apiInstance.post("/verify-otp", otp)
+            const res = await apiInstance.post("/users/verify-otp", otp)
             return res.data
         } catch (error) {
             throw new Error ( error?.response?.data?.message || 'OTP verification failed' )
@@ -19,7 +19,7 @@ const authService = {
     },
     login: async (credentials)=>{
         try {
-            const res = await apiInstance.post("/login", credentials)
+            const res = await apiInstance.post("/users/login", credentials)
             return res.data
         } catch (error) {
             throw new Error ( error?.response?.data?.message || 'Login failed' )
@@ -27,7 +27,7 @@ const authService = {
     },
     logout: async ()=>{
         try {
-            const res = await apiInstance.post("/logout")
+            const res = await apiInstance.post("/users/logout")
             return res.data    
         } catch (error) {
             throw new Error ( error?.response?.data?.message || 'Logout failed' )
@@ -36,7 +36,7 @@ const authService = {
     },
     getCurrentUser: async ()=>{
         try {
-            const res = await apiInstance.get("/profile")
+            const res = await apiInstance.get("/users/profile")
             return res.data
         } catch (error) {
             // throw new Error ( error?.response?.data?.message || 'Failed to fetch user profile' )
@@ -45,7 +45,7 @@ const authService = {
     },
     changePassword: async (passwords)=>{
         try {
-            const res = await apiInstance.patch("/change-password", passwords)
+            const res = await apiInstance.patch("/users/change-password", passwords)
             return res.data
         } catch (error) {
             throw new Error ( error?.response?.data?.message || 'Failed to cahnge password' )
@@ -53,7 +53,7 @@ const authService = {
     },
     updateUser: async (userData)=>{
         try {
-            const res = await apiInstance.patch("/update-profile", userData)
+            const res = await apiInstance.patch("/users/update-profile", userData)
             return res.data
         } catch (error) {
             throw new Error ( error?.response?.data?.message || 'Failed to update user' )
@@ -61,7 +61,7 @@ const authService = {
     },
     isLoggedIn:  async()=>{
         try {
-            const res = await apiInstance.get("/profile")
+            const res = await apiInstance.get("/users/profile")
             return !!res.data
         } catch (error) {
             return false
