@@ -84,6 +84,8 @@
   --animate-shimmer-slide: shimmer-slide var(--speed) ease-in-out infinite alternate;
 
   --animate-spin-around: spin-around calc(var(--speed) * 2) infinite linear;
+
+  --color-destructive-foreground: var(--destructive-foreground);
   @keyframes shimmer-slide {
   to {
     transform: translate(calc(100cqw - 100%), 0);
@@ -170,6 +172,8 @@
   --sidebar-border: oklch(0.922 0 0);
 
   --sidebar-ring: oklch(0.708 0 0);
+
+  --destructive-foreground: var(--color-red-700);
 }
 
 .dark {
@@ -235,6 +239,8 @@
   --sidebar-border: oklch(1 0 0 / 10%);
 
   --sidebar-ring: oklch(0.556 0 0);
+
+  --destructive-foreground: var(--color-red-400);
 }
 
 @layer base {

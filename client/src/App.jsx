@@ -1,18 +1,17 @@
 import { useState, useEffect } from 'react'
 import { ThemeProvider } from './context/context.js'
 import Hero from './components/Hero'
-
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute.jsx'
 import Note from './pages/Note.jsx'
-
-
+import { ToastProvider, AnchoredToastProvider } from "@/components/ui/toast.jsx"
+import Layout from './Layout.jsx';
 
 
 function App()
 {
 
-  const [themeMode, setThemeMode] = useState(() => localStorage.getItem('currentTheme') || 'light')
+  const [themeMode, setThemeMode] = useState(() => localStorage.getItem('currentTheme') || 'dark')
 
   const lightTheme = () =>
   {
@@ -32,18 +31,22 @@ function App()
 
   return (
     <ThemeProvider value={{ themeMode, darkTheme, lightTheme }}>
-      {/* <BrowserRouter> */}
-        <Routes>
-          <Route path='/' element={<Hero />}/>
-          <Route 
-            path='/notes' 
-            element={ 
-            <ProtectedRoute> 
-              <Note/> 
-            </ProtectedRoute> 
-          }/>
-        </Routes>
-      {/* </BrowserRouter> */}
+      <ToastProvider>
+        <AnchoredToastProvider>
+          <Routes>
+            <Route path='/' element={<Hero />}/>
+            <Route 
+              path='/notes' 
+              element={ 
+              <ProtectedRoute>
+                <Layout >
+                  <Note/>
+                </Layout>
+              </ProtectedRoute> 
+            }/>
+          </Routes>
+        </AnchoredToastProvider>
+      </ToastProvider>
     </ThemeProvider>
   )
 }

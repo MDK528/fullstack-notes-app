@@ -1,16 +1,15 @@
-import React from 'react'
+import React,{ useState } from 'react'
 import { Button } from '@/components/ui/button'
-import {Dialog, DialogContent, DialogDescription, DialogFooter,DialogHeader, DialogTitle, DialogTrigger} from '@/components/ui/dialog.jsx'
+import { Dialog, DialogContent, DialogDescription, DialogFooter,DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog.jsx'
 import { BorderBeam } from "@/components/ui/border-beam"
 import { Input } from "@/components/ui/input.jsx"
 import { Label } from "@/components/ui/label.jsx"
 import { ShimmerButton } from "@/components/ui/shimmer-button.jsx"
-
-// try to signin
-
-import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import authService from '@/services/auth.service.js'
+import { toastManager } from "@/components/ui/toast"
+import { Info } from "lucide-react"
+
 
 function SignIn()
 {
@@ -32,6 +31,7 @@ function SignIn()
     }
 
     const handleSubmit = async (e) => {
+        e.preventDefault()
         setError('')
         setLoading(true)
 
@@ -40,6 +40,12 @@ function SignIn()
             navigate('/notes')
         } catch (err) {
             setError(err.message)
+            // toastManager.add({
+            //     title: "Error",
+            //     description: err.message,
+            //     type: "error"
+            //     })
+
         } finally {
             setLoading(false)
         }
@@ -48,7 +54,6 @@ function SignIn()
     return (
         <div>
             <Dialog>
-
                     <DialogTrigger asChild>
                         <ShimmerButton 
                         type="button"
@@ -59,21 +64,18 @@ function SignIn()
                         </ShimmerButton>
                     </DialogTrigger>
 
-                    <DialogContent className='bg-foreground border-neutral-700 text-neutral-100 sm:max-w-97'>
+                    <DialogContent 
+                        className='bg-foreground dark:bg-background border-neutral-700 dark:border-neutral-700 text-neutral-100 dark:text-neutral-100 
+                        sm:max-w-97'
+                    >
                         <DialogHeader>
                             <DialogTitle>Sign In</DialogTitle>
                             <DialogDescription>
                                     Enter your credentials to access your account.
                             </DialogDescription>
-                            {/* {error && (
-                                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-                                    {error}
-                                </div>
-                                )} */}
-
                         </DialogHeader>
 
-                        <form onSubmit= {handleSubmit} method='post'>
+                        <form onSubmit= {handleSubmit}>
                             <div className="grid gap-4">
                                 <div className="grid gap-2">
                                     <Label htmlFor="username-1">Username</Label>
@@ -102,14 +104,25 @@ function SignIn()
                                     type="submit"
                                     disabled={loading} 
                                     variant='outline' 
-                                    className={'bg-neutral-700 hover:bg-neutral-800 hover:text-neutral-200 border-neutral-500 cursor-pointer w-full'}
+                                    className={'mt-4 bg-foreground hover:bg-neutral-800 hover:text-neutral-200 border-neutral-500 cursor-pointer w-full'}
                                     >
                                         {loading ? 'Signing In' : 'Sign In'}
                                 </Button>
+
+                                <div className='w-full h-2 text-red-600 font-semibold flex items-center justify-center gap-1'>
+                                    {
+                                        error && <>
+                                                    <Info height={16} width={16}/>
+                                                    <p className="text-sm text-center">
+                                                            {error}
+                                                    </p>
+                                                 </>
+                                    }
+                                </div>
                             </div>
                                 
                         </form>
-                            <p>Don't have an account?Sign Up</p>
+                            <p>Don't have an account? Sign Up</p>
                         <BorderBeam duration={8} size={100} />
                     </DialogContent>
             </Dialog>
