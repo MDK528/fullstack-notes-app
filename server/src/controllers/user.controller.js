@@ -96,14 +96,14 @@ const verifyUserWithOTP = asyncHandler(async(req, res)=>{
     const dbOTP = await OTP.findOne({otp})
   
     if (!dbOTP) {
-        return res.status(401).json({
+        return res.status(400).json({
             "success": false,
             "message": "Please enter valid otp"
         })
     }
 
     if (new Date() > dbOTP.expiresAt) {
-        return res.status(401).json({
+        return res.status(400).json({
             "success": false,
             "message": "Your OTP expired"
         })

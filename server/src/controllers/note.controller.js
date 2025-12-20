@@ -9,7 +9,7 @@ const createNote = asyncHandler(async(req, res)=>{
 
     if (!noteItem || noteItem === "") {
         return res
-                .status(401)
+                .status(400)
                 .json({
                     "success": false,
                     "message": "Fill your note body first"

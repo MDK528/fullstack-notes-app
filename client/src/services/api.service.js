@@ -9,11 +9,7 @@ apiInstance.interceptors.request.use(
     (config)=>{
         if (!(config.data instanceof FormData)) {
             config.headers['Content-Type'] = 'application/json'
-        }
-
-        console.log("➡️", config.method?.toUpperCase(), config.url);
-        console.log("Config", config);
-        
+        }        
         return config
     },
 
@@ -29,33 +25,17 @@ apiInstance.interceptors.response.use(
     },
 
     async (error) => {
-    const originalRequest = error.config;
 
-    // Network error
     if (!error.response) {
-      console.error("❌ Network error");
       return Promise.reject(error);
     }
 
-    if (error.response.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-
-      try {
-        // Refresh token API (cookie-based)
-        await apiInstance.post("/auth/refresh");
-
-        // Retry original request
-        return apiInstance(originalRequest);
-      } catch (refreshError) {
-        // Refresh failed → logout
+    if (error.response.status === 401) {
         try {
-          await apiInstance.post("/auth/logout");
+          await apiInstance.post("/users/logout");
         } catch (_) {}
-
-        // Redirect to login
-        window.location.href = "/login";
+        window.location.href = "/";
         return Promise.reject(refreshError);
-      }
     }
 
     return Promise.reject(error);
