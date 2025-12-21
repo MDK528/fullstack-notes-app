@@ -26,16 +26,10 @@ apiInstance.interceptors.response.use(
 
     async (error) => {
 
-    if (!error.response) {
-      return Promise.reject(error);
-    }
-
     if (error.response.status === 401) {
-        try {
-          await apiInstance.post("/users/logout");
-        } catch (_) {}
+        await apiInstance.post("/users/logout");
         window.location.href = "/";
-        return Promise.reject(refreshError);
+        return Promise.reject(error);
     }
 
     return Promise.reject(error);

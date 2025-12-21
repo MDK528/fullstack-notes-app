@@ -5,12 +5,12 @@ import { AppSidebar } from "@/components/app-sidebar.jsx"
 function Layout({children}) {
   return (
     <SidebarProvider>
-           <AppSidebar/>
-           <main>
-             <SidebarTrigger />
-             {children}
-           </main>
-      </SidebarProvider>
+      <AppSidebar/>
+      <main>
+        <SidebarTrigger />
+        {children}
+      </main>
+    </SidebarProvider>
   )
 }
 

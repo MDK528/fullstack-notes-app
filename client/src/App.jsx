@@ -42,7 +42,7 @@ function App()
                 <Layout >
                   <Note/>
                 </Layout>
-              </ProtectedRoute> 
+              </ProtectedRoute>
             }/>
           </Routes>
         </AnchoredToastProvider>
