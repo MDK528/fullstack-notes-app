@@ -151,7 +151,7 @@ const loginUser = asyncHandler(async(req, res)=>{
     const isValidPassword = await isUserExist.isPasswordValid(password)
 
     if (!isValidPassword) {
-        return res.status(401).json({
+        return res.status(400).json({
             "success": false,
             "message": "Invalid Password"
         })

@@ -43,9 +43,11 @@ export default function Note(){
     },[])
 
     if (loading) {
-        return  (<div className="flex items-center justify-center min-h-screen">
+        return  (<div className="flex items-center justify-center w-full">
                     <div className="text-xl">Loading notes...</div>
                 </div>)
+
+        // return null
     }
     return (
         <>

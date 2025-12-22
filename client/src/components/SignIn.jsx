@@ -1,4 +1,4 @@
-import React,{ useState } from 'react'
+import React,{ useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogDescription, DialogFooter,DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog.jsx'
 import { BorderBeam } from "@/components/ui/border-beam"
@@ -13,7 +13,7 @@ import { Info } from "lucide-react"
 
 function SignIn()
 {
-
+    const [isLoggedIn, setIsloggedIn] = useState(null)
     const navigate = useNavigate()
     const [formData, setFormData] = useState({
         userName: '',
@@ -40,17 +40,20 @@ function SignIn()
             navigate('/notes')
         } catch (err) {
             setError(err.message)
-            // toastManager.add({
-            //     title: "Error",
-            //     description: err.message,
-            //     type: "error"
-            //     })
-
         } finally {
             setLoading(false)
         }
     }
 
+    useEffect(()=>{
+        (async()=>{
+                await authService.isLoggedIn().then(ok=>setIsloggedIn(ok))
+                if (isLoggedIn) {
+                    navigate('/notes')
+                }
+            }
+        )()
+    },[isLoggedIn])
     return (
         <div>
             <Dialog>
