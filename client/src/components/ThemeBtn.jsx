@@ -3,7 +3,7 @@ import {Sun, Moon} from "lucide-react"
 import { Button } from './ui/button.jsx'
 import { useTheme } from '@/context/context.js'
 
-function ThemeBtn() {
+function ThemeBtn({className}) {
     const {themeMode, lightTheme, darkTheme} = useTheme()
 
     const toggleTheme = (e) => {
@@ -16,11 +16,11 @@ function ThemeBtn() {
 
     return (
 
-        <div className=''>
-            <Button variant='ghost' className='cursor-pointer outline-none rounded-full dark:bg-background bg-background ' onClick={toggleTheme}>
-                {themeMode === 'light' ? <Moon/>: <Sun/>}
-            </Button>
-        </div>
+        // <div className=''>
+            <div className={className} onClick={toggleTheme}>
+                {themeMode === 'light' ? <Moon hanging={16} width={16}/>: <Sun hanging={16} width={16}/>}
+            </div>
+        // {/* </div> */}
     )
 }
 
