@@ -22,7 +22,7 @@ function Hero() {
                 <span className='text-base font-semibold md:font-bold md:text-lg'>AI Notes</span>
             </div>
             <div className='flex items-center gap-4'>
-              <ThemeBtn/>
+              <ThemeBtn className={'cursor-pointer'}/>
               <SignIn/>
             </div>
         </div>

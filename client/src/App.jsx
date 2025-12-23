@@ -6,9 +6,6 @@ import ProtectedRoute from './components/ProtectedRoute.jsx'
 import Note from './pages/Note.jsx'
 import { ToastProvider, AnchoredToastProvider } from "@/components/ui/toast.jsx"
 import Layout from './Layout.jsx';
-import { Sigma } from 'lucide-react';
-import './index.css'
-
 
 
 function App()
@@ -43,13 +40,10 @@ function App()
               element={ 
               <ProtectedRoute>
                 <Layout >
-                  <div className='pr fixed  overflow-y-scroll px-4 py-4 m-2 md:m-4 h-[90%] border dark:border-neutral-700 rounded-xl'
+                  <div className='px-4 mt-16 mx-2 lg:min-w-350'
                   >
-                    <div className=''>
                       <Note/>
-                      <Sigma/>
                     </div>    
-                  </div>
                 </Layout>
               </ProtectedRoute>
             }/>

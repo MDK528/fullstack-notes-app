@@ -12,7 +12,7 @@ const createNote = asyncHandler(async(req, res)=>{
                 .status(400)
                 .json({
                     "success": false,
-                    "message": "Fill your note body first"
+                    "message": "Fill your note first"
                 })
     }
 

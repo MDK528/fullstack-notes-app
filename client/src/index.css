@@ -251,29 +251,3 @@
     @apply bg-background text-foreground;
   }
 }
-
-
-.pr::-webkit-scrollbar {
-  width: 6px;
-}
-
-.pr::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.pr::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 3px;
-}
-
-.pr::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
-.dark .pr::-webkit-scrollbar-thumb {
-  background: #555;
-}
-
-.dark .pr::-webkit-scrollbar-thumb:hover {
-  background: #888;
-}
