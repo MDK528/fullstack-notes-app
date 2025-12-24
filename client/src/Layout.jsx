@@ -27,7 +27,7 @@ function Layout({ children })
           <div className='fixed w-full dark:bg-background bg-background'>
             <div className='flex items-center px-4 py-2 md:py-4 lg:py-4'>
               <SidebarTrigger className={'cursor-pointer md:sr-only lg:sr-only'} />
-              <h1 className='text-xl font-semibold sm:text-2xl'>Welcome {user ? user.fullName : ''}</h1>
+              <h1 className='text-xl font-semibold sm:text-2xl'>Hi {user ? user.fullName : ''}</h1>
             </div>
           </div>
           {children}

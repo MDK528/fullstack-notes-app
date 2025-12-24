@@ -46,7 +46,7 @@ const getNotes = asyncHandler(async(req, res)=>{
             .status(404)
             .json({
                 "success": false,
-                "message": "No Notes found",
+                "message": "No Notes Yet, Create Your Note",
             })
     }
 
@@ -75,7 +75,7 @@ const updateNote = asyncHandler(async(req, res)=>{
             $set: {
                 noteTitle,
                 noteItem,
-                completed,
+                completed: completed || false,
                 image: response?.url || ""
             }
         },

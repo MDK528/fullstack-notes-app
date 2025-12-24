@@ -1,4 +1,4 @@
-import { Calendar, ChevronUp, Home, Inbox, LogOut, Search, Settings, User2 } from "lucide-react"
+import { Archive, Calendar, ChevronUp, Home, icons, Inbox, LogOut, Search, Settings, User2 } from "lucide-react"
 import
   {
     Sidebar,
@@ -17,7 +17,7 @@ import
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu"
 import ThemeBtn from "./ThemeBtn"
 import authService from "@/services/auth.service"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 
 
@@ -26,18 +26,8 @@ export function AppSidebar() {
   const items = [
     {
       title: "Home",
-      url: "#",
+      url: "/notes",
       icon: Home,
-    },
-    {
-      title: "Inbox",
-      url: "#",
-      icon: Inbox,
-    },
-    {
-      title: "Calendar",
-      url: "#",
-      icon: Calendar,
     },
     {
       title: "Search",
@@ -45,10 +35,10 @@ export function AppSidebar() {
       icon: Search,
     },
     {
-      title: "Settings",
+      title: "Archive",
       url: "#",
-      icon: Settings,
-    },
+      icon: Archive
+    }
   ]
   const navigate = useNavigate()
   const logout = async (e)=> {
@@ -78,7 +68,7 @@ export function AppSidebar() {
 
     <Sidebar collapsible="icon">
       <div className="flex justify-between mx-2 my-2">
-          { hide ?  <h1 className="text-xl ml-2">AI Note</h1> : <></>}
+          { hide ?  <h1 className="text-xl ml-2">AI Note</h1> : ''}
           <SidebarTrigger className={'cursor-pointer ml-0.5'} onClick={handleHide}/>
       </div>
       <SidebarContent >
@@ -88,10 +78,10 @@ export function AppSidebar() {
             {items.map((item) => (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton asChild>
-                  <a href={item.url}>
+                  <Link to={item.url}>
                     <item.icon />
                     <span>{item.title}</span>
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ))}
@@ -111,7 +101,7 @@ export function AppSidebar() {
               </DropdownMenuTrigger>
                 <DropdownMenuContent
                 side="bottom"
-                className="border border-neutral-300 dark:border-neutral-700  rounded-md mx-2 min-w-60 "
+                className="border bg-card border-neutral-300 dark:border-neutral-700  rounded-md mx-2 min-w-60 "
               >
                 <DropdownMenuGroup>
                   <DropdownMenuItem>

@@ -2,7 +2,7 @@ import React,{ useState, useEffect } from "react";
 import noteService from "@/services/notes.service.js";
 import Textarea from "@/components/TextArea";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, ChevronUp, Plus } from "lucide-react";
+import { ChevronDown, ChevronUp, Pencil, Plus, Save, Trash2 } from "lucide-react";
 import { toastManager } from "@/components/ui/toast";
 
 export default function Note(){
@@ -11,6 +11,9 @@ export default function Note(){
     const [newNoteTitle, setNewNoteTitle] = useState('')
     const [newNoteItem, setNewNoteItem] = useState('')
     const [closeTexarea, setCloseTextarea] = useState(true)
+    const [editingId, setEditingId] = useState(null)
+    const [editTitle, setEditTitle] = useState('')
+    const [editItem, setEditItem] = useState('')
 
     const closeBtn = (e) => { 
         e.preventDefault()
@@ -29,13 +32,13 @@ export default function Note(){
             setNewNoteTitle('')
             setNewNoteItem('')
         } catch (error) {
-             toastManager.add({
+            toastManager.add({
                 title: "Error",
                 description: error.message,
                 type: "error"
-                })
+            })
         }
-
+        setCloseTextarea(true)
     }
 
     useEffect(()=>{
@@ -43,12 +46,14 @@ export default function Note(){
         const fetchNotes = async () => {
             try {
                 const notesData = await noteService.getNotes()
-                // console.log("This is fetched Notes Data: ", notesData)
                 setNotes(notesData.data)
-                // console.log("This is Notes State(try): ", notes)
             } catch (error) {
-                console.log("Something went wrong while fetching notes: ", error)
-                // console.log("This is Notes State(catch): ", notes)
+                // console.log("Something went wrong while fetching notes: ", error)
+                toastManager.add({
+                    title: "Info",
+                    description: error.message,
+                    type: "info"
+                })
             } finally {
                 setLoading(false)
             }
@@ -56,6 +61,65 @@ export default function Note(){
         
         fetchNotes()
     },[])
+
+    const startEditNote = (note) =>{
+        if (editingId === note._id) {
+            setEditingId(null);
+            setEditTitle('')
+            setEditItem('')
+         } 
+         else {
+            setEditingId(note._id);
+            setEditTitle(note.newNoteTitle)
+            setEditItem(note.newNoteItem)
+        }
+
+    }
+
+    const saveNote = async (noteId) => {
+        try {
+            const response = await noteService.updateNote(noteId, {
+                noteTitle: editTitle,
+                noteItem: editItem
+            })
+
+            setNotes(notes.map(note=> note._id === noteId ? response.data : note))
+            setEditingId(null)
+            setEditTitle('')
+            setEditItem('')
+
+            toastManager.add({
+                    title: "Success",
+                    description: response.message,
+                    type: "success"
+                })
+
+        } catch (error) {
+            toastManager.add({
+                    title: "Error",
+                    description: error.message,
+                    type: "error"
+                })
+        }
+    }
+
+    const deleteNote = async(noteId) =>{
+        try {
+            const response = await noteService.deleteNote(noteId)
+            setNotes(notes.filter(note=> note._id !== noteId))
+            toastManager.add({
+                    title: "Success",
+                    description: response.message,
+                    type: "success"
+                })
+        } catch (error) {
+             toastManager.add({
+                    title: "Error",
+                    description: error.message,
+                    type: "error"
+                })
+        }
+    }
 
     if (loading) {
         // return (
@@ -75,11 +139,9 @@ export default function Note(){
     }
 
     return (
-        <div className="min-h-screen  bg-background mt-4">
-            <div className="max-w-6xl mx-auto">
-
+        <div className="md:max-w-160 bg-background mx-auto">
                 <div
-                    className='sm:w-lg md:w-xl mx-auto bg-card rounded-md border border-neutral-200 dark:border-neutral-800 
+                    className='bg-card rounded-md border border-neutral-200 dark:border-neutral-800 
                     p-2'
                 >
                     <div>
@@ -121,30 +183,70 @@ export default function Note(){
 
                 </div>
 
-                <div className="bg-card mt-4 sm:w-lg md:w-xl mx-auto">
+                <div className="mt-4">
                     {notes.length === 0 ? (
-                        <p className="text-muted-foreground">
+                        <p className="text-muted-foreground text-center">
                             No notes yet. Create your first note!
                         </p>
                     ) : (
-                        <div className="grid gap-4">
-                            {notes.map((note) => (
-                                <div 
-                                    key={note._id} 
-                                    className="border p-4 rounded-lg hover:bg-accent/50 "
-                                >
-                                    <h3 className="font-semibold text-lg">
-                                        {note.noteTitle || 'Untitled Note'}
-                                    </h3>
-                                    <p className="text-muted-foreground mt-2">
-                                        {note.noteItem}
-                                    </p>
-                                </div>
-                            ))}
+                        <div className="grid gap-1">
+                        
+                            {notes.map((note) => {
+                                const isEditing = editingId === note._id
+                                
+                                return (
+                                    <div
+                                        className='bg-card rounded-md border border-gray-300 dark:border-neutral-800 p-2 my-2'
+                                        key={note._id}
+                                    >
+                                        <div>
+                                            <Textarea
+                                                className={'w-full overflow-hidden field-sizing-content resize-none px-2 py-1 sm:px-3 sm:py-2 outline-none text-neutral-700 text-lg sm:text-xl dark:text-neutral-300'}
+                                                value={isEditing ? editTitle : note.noteTitle}
+                                                onChange={(e) => setEditTitle(e.target.value)}
+                                                readOnly={!isEditing}
+                                            />
+                                        </div>
+
+                                        <div>
+                                            <Textarea
+                                                className={'w-full overflow-hidden field-sizing-content resize-none px-2 py-1 sm:px-3 sm:py-2 outline-none text-neutral-700 text-sm sm:text-base dark:text-neutral-300'}
+                                                value={isEditing ? editItem : note.noteItem}
+                                                onChange={(e) => setEditItem(e.target.value)}
+                                                readOnly={!isEditing}
+                                            />
+                                        </div>
+
+                                        <div className='flex gap-5 px-2 py-1 sm:px-3 sm:py-2 justify-end items-center overflow-hidden'>
+                                            <Button 
+                                                variant='ghost'
+                                                className={'cursor-pointer'}
+                                                onClick={() => {
+                                                    if (isEditing) {
+                                                        saveNote(note._id)
+                                                    } else {
+                                                        startEditNote(note)
+                                                    }
+                                                }}
+                                            >
+                                                {isEditing ? <Save height={16} width={16}/> : <Pencil height={16} width={16}/>}
+                                            </Button>
+
+                                            <Button 
+                                                variant='ghost'
+                                                className={'cursor-pointer'}
+                                                onClick={() => deleteNote(note._id)}
+                                            >
+                                                {!isEditing && <Trash2 height={16} width={16}/>}
+                                            </Button>
+                                        </div>
+                                    </div>
+                                )
+                            })}
                         </div>
+                        
                     )}
                 </div>
-            </div>
         </div>
     )
     
