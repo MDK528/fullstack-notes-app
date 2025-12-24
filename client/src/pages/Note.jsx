@@ -1,6 +1,6 @@
 import React,{ useState, useEffect } from "react";
 import noteService from "@/services/notes.service.js";
-import Textarea from "@/components/Textarea";
+import Textarea from "@/components/Textarea.jsx";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, ChevronUp, Pencil, Plus, Save, Trash2 } from "lucide-react";
 import { toastManager } from "@/components/ui/toast";
