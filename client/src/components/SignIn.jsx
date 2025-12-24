@@ -45,15 +45,15 @@ function SignIn()
         }
     }
 
-    useEffect(()=>{
-        (async()=>{
-                await authService.isLoggedIn().then(ok=>setIsloggedIn(ok))
-                if (isLoggedIn) {
-                    navigate('/notes')
-                }
-            }
-        )()
-    },[isLoggedIn])
+    // useEffect(()=>{
+    //     (async()=>{
+    //             await authService.isLoggedIn().then(ok=>setIsloggedIn(ok))
+    //             if (isLoggedIn) {
+    //                 navigate('/notes')
+    //             }
+    //         }
+    //     )()
+    // },[isLoggedIn])
     return (
         <div>
             <Dialog>
