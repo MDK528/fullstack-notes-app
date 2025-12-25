@@ -6,7 +6,8 @@ import { OTP } from "../models/otp.model.js"
 
 const options = {
     httpOnly: true,
-    secure: true
+    secure: true,
+    sameSite: 'none'
 }
 
 const generateAccessTokenAndRefreshToken = async (userId)=>{
