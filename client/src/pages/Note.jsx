@@ -2,8 +2,10 @@ import React,{ useState, useEffect } from "react";
 import noteService from "@/services/notes.service.js";
 import Textarea from "@/components/Textarea";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, ChevronUp, Pencil, Plus, Save, Trash2 } from "lucide-react";
+import { ChevronDown, ChevronUp, Pencil, Plus, Save, Sparkles, Trash2 } from "lucide-react";
 import { toastManager } from "@/components/ui/toast";
+import { Dialog, DialogContent, DialogDescription, DialogFooter,DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog.jsx'
+import { TextShimmer } from "@/components/ui/text-shimmer";
 
 export default function Note(){
     const [loading, setLoading] = useState(true)
@@ -14,6 +16,7 @@ export default function Note(){
     const [editingId, setEditingId] = useState(null)
     const [editTitle, setEditTitle] = useState('')
     const [editItem, setEditItem] = useState('')
+    const [noteSummary, setNoteSummary] = useState('')
 
     const closeBtn = (e) => { 
         e.preventDefault()
@@ -118,6 +121,20 @@ export default function Note(){
                     description: error.message,
                     type: "error"
                 })
+        }
+    }
+
+    const summarizeNote = async(noteId) => {
+        try {
+            const response = await noteService.summarizeNote(noteId)
+            setNoteSummary(response.data)
+        } catch (error) {
+            setNoteSummary('')
+            toastManager.add({
+                title:"Error",
+                description: error.message,
+                type: "error"
+            })
         }
     }
 
@@ -239,6 +256,29 @@ export default function Note(){
                                             >
                                                 {!isEditing && <Trash2 height={16} width={16}/>}
                                             </Button>
+
+                                            <Dialog>
+                                                <DialogTrigger 
+                                                    className="cursor-pointer" 
+                                                    asChild
+                                                    // onClick={()=>summarizeNote(note._id)}
+                                                >
+                                                    <Sparkles height={16} width={16}/>
+                                                </DialogTrigger>
+
+                                                <DialogContent>
+                                                    <DialogHeader>
+                                                    <DialogTitle>AI Summary</DialogTitle>
+                                                    <DialogDescription className={'text-base'}>
+                                                        <TextShimmer className='font-mono text-sm' duration={1}>
+                                                            Summarizing...
+                                                        </TextShimmer>
+                                                        <br />
+                                                        {noteSummary}
+                                                    </DialogDescription>
+                                                    </DialogHeader>
+                                                </DialogContent>
+                                            </Dialog>
                                         </div>
                                     </div>
                                 )

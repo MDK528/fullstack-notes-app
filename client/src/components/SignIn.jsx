@@ -45,15 +45,15 @@ function SignIn()
         }
     }
 
-    // useEffect(()=>{
-    //     (async()=>{
-    //             await authService.isLoggedIn().then(ok=>setIsloggedIn(ok))
-    //             if (isLoggedIn) {
-    //                 navigate('/notes')
-    //             }
-    //         }
-    //     )()
-    // },[isLoggedIn])
+    useEffect(()=>{
+        (async()=>{
+                await authService.isLoggedIn().then(ok=>setIsloggedIn(ok))
+                if (isLoggedIn) {
+                    navigate('/notes')
+                }
+            }
+        )()
+    },[isLoggedIn])
     return (
         <div>
             <Dialog>
@@ -125,7 +125,7 @@ function SignIn()
                             </div>
                                 
                         </form>
-                            <p>Don't have an account? Sign Up</p>
+                            <p>Don't have an account? <a href="/signup">Sign Up</a></p>
                         <BorderBeam duration={8} size={100} />
                     </DialogContent>
             </Dialog>

@@ -11,7 +11,10 @@ const authService = {
     },
     verifyOTP: async (otp)=>{
         try {
-            const res = await apiInstance.post("/users/verify-otp", otp)
+            const res = await apiInstance.post("/users/verify-otp", {otp})
+            console.log("oto", otp);
+            console.log(res.data);
+            
             return res.data
         } catch (error) {
             throw new Error ( error?.response?.data?.message || 'OTP verification failed' )

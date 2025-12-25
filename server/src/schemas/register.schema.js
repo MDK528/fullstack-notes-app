@@ -3,8 +3,10 @@ import { z } from "zod";
 export const registerSchema = z.object({
         fullName: z
                 .string()
-                .min(3, "Fullname must be 2 characters")
-                .regex(/^[A-Za-z]+(?: [A-Za-z]+)*$/, "Only letters and single spaces allowed"),
+                .trim()
+                .min(1, "Fullname is required")
+                .max(50, "Fullname is too long")
+                .regex(/^[A-Za-z]+(?:[ '][A-Za-z]+)*$/, "Only letters, single spaces, and hyphens/apostrophes allowed"),
         emailId: z
                 .email("Invalid email address")
                 .min(8, "EmailId must be 8 characters"),

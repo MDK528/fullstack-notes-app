@@ -4,9 +4,12 @@ import SignIn from "@/components/SignIn.jsx"
 import { Button } from './ui/button'
 import { AnimatedGridPattern } from '@/components/ui/animated-grid-pattern'
 import ThemeBtn from './ThemeBtn'
+import { useNavigate } from 'react-router-dom'
+
 
 function Hero() {
 
+  const navigate = useNavigate()
 
   return (
     <div className="relative items-center justify-center overflow-hidden bg-background dark:bg-background">
@@ -29,7 +32,7 @@ function Hero() {
 
         <div className="text-center space-y-8 mt-16">
 
-          <div className="inline-flex items-center space-x-2 px-4 py-2 bg-rose-400 border border-rose-800 rounded-full backdrop-blur-sm">
+          <div className="inline-flex items-center space-x-2 px-4 py-2 border border-rose-600 rounded-full backdrop-blur-sm">
             <Sparkles className="w-4 h-4 text-rose-600" />
             <span className="text-sm font-semibold">AI-Powered Notes</span>
           </div>
@@ -51,7 +54,11 @@ function Hero() {
         </div>
 
         <div className='text-center my-6'>
-          <Button variant='default' className={'bg-linear-to-r from-purple-800 via-pink-600 to-rose-600 cursor-pointer dark:text-foreground mx-1'}>Start Taking Notes<ArrowRight/></Button>
+          <Button 
+          variant='default' className={'bg-linear-to-r from-purple-800 via-pink-600 to-rose-600 cursor-pointer dark:text-foreground mx-1'}
+          >
+            Start Taking Notes<ArrowRight/>
+          </Button>
           <Button variant='outline' className={'border-rose-600 dark:border-rose-600 dark:text-foreground bg-background cursor-pointer mx-1'}>Wacth Demo</Button>
         </div>
 
