@@ -7,7 +7,9 @@ import { OTP } from "../models/otp.model.js"
 const options = {
     httpOnly: true,
     secure: true,
-    sameSite: 'none'
+    sameSite: 'none',
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+    path: '/'
 }
 
 const generateAccessTokenAndRefreshToken = async (userId)=>{
