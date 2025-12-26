@@ -64,7 +64,7 @@ const registerUser = asyncHandler(async(req, res)=>{
 
     sendOTPmail(user.emailId, generatedOTP)
     .then(()=>{
-        console.log(`Your OTP generated successfully & OTP is ${generatedOTP}`)
+        console.log(`Your OTP generated successfully`)
     })
     .catch((err)=>{
         console.log(err?.message || "Something went wrong while genrating OTP")

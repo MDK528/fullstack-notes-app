@@ -84,7 +84,7 @@ const updateNote = asyncHandler(async(req, res)=>{
         }
     )
 
-    console.log(updatedNote)
+    // console.log(updatedNote)
 
     if (!updatedNote) {
         return res
