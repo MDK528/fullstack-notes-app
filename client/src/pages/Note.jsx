@@ -263,7 +263,7 @@ export default function Note(){
                                                 <DialogTrigger 
                                                     className="cursor-pointer" 
                                                     asChild
-                                                    // onClick={()=>summarizeNote(note._id)}
+                                                    onClick={()=>summarizeNote(note._id)}
                                                 >
                                                     <Sparkles height={16} width={16}/>
                                                 </DialogTrigger>
