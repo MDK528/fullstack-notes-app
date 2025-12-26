@@ -37,7 +37,7 @@ function SignIn()
 
         try {
             await authService.login(formData)
-            navigate('/notes')
+            navigate('/home')
         } catch (err) {
             setError(err.message)
         } finally {
@@ -49,7 +49,7 @@ function SignIn()
         (async()=>{
                 await authService.isLoggedIn().then(ok=>setIsloggedIn(ok))
                 if (isLoggedIn) {
-                    navigate('/notes')
+                    navigate('/home')
                 }
             }
         )()

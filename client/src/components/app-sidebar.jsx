@@ -19,6 +19,7 @@ import ThemeBtn from "./ThemeBtn"
 import authService from "@/services/auth.service"
 import { Link, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
+import { toastManager } from "./ui/toast"
 
 
 export function AppSidebar() {
@@ -26,7 +27,7 @@ export function AppSidebar() {
   const items = [
     {
       title: "Home",
-      url: "/notes",
+      url: "/home",
       icon: Home,
     },
     {
@@ -41,10 +42,34 @@ export function AppSidebar() {
     }
   ]
   const navigate = useNavigate()
-  const logout = async (e)=> {
-    await authService.logout()
-    navigate('/')
+
+  const profile = (e) => {
+    e.preventDefault()
+    try {
+      navigate('/profile')
+    } catch (error) {
+      toastManager.add({
+        title: "Error",
+        description: error.message,
+        type: "error"
+      })
+    }
   }
+
+  const logout = async (e)=> {
+    e.preventDefault()
+    try {
+      await authService.logout()
+      navigate('/')
+    } catch (error) {
+      toastManager.add({
+        title: "Error",
+        description: error.message,
+        type: "error"
+      })
+    }
+  }
+
   const [hide, setHide] = useState(true)
   const handleHide = (e) =>{
     e.preventDefault()
@@ -105,7 +130,7 @@ export function AppSidebar() {
               >
                 <DropdownMenuGroup>
                   <DropdownMenuItem>
-                    <button className="cursor-pointer py-2 px-2 flex items-center gap-4 w-full"><User2 height={16} width={16}/><span>Account</span></button>
+                    <button onClick={profile} className="cursor-pointer py-2 px-2 flex items-center gap-4 w-full"><User2 height={16} width={16}/><span>Profile</span></button>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
                     <ThemeBtn className="cursor-pointer py-2 px-2 flex items-center gap-4 w-full"><span>Theme</span></ThemeBtn>

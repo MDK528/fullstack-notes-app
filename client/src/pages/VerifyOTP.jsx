@@ -38,7 +38,7 @@ export function VerifyOTP()
             
         try {
             await authService.verifyOTP(otp)
-            navigate('/notes')
+            navigate('/home')
         } catch (error) {
             toastManager.add({
                 title: "Error",

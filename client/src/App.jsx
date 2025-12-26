@@ -8,6 +8,7 @@ import { ToastProvider, AnchoredToastProvider } from "@/components/ui/toast.jsx"
 import Layout from './Layout.jsx';
 import Signup from './pages/Signup.jsx';
 import {VerifyOTP} from './pages/VerifyOTP.jsx';
+import Profile from './pages/Profile.jsx';
 
 
 function App()
@@ -42,7 +43,7 @@ function App()
               <Route path="verify-otp" element={<VerifyOTP />} />
             </Route>
             <Route
-              path='/notes'
+              path='/home'
               element={
                 <ProtectedRoute>
                   <Layout >
@@ -53,6 +54,18 @@ function App()
                   </Layout>
                 </ProtectedRoute>
               } />
+
+              <Route path='/profile' element={
+                <ProtectedRoute>
+                  <Layout >
+                    <div className='px-4 mt-16 min-w-100 md:min-w-300'
+                    >
+                      <Profile/>
+                    </div>
+                  </Layout>
+                </ProtectedRoute>
+                }
+              />
           </Routes>
         </AnchoredToastProvider>
       </ToastProvider>

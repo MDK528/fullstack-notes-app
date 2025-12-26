@@ -6,6 +6,7 @@ import { ChevronDown, ChevronUp, Pencil, Plus, Save, Sparkles, Trash2 } from "lu
 import { toastManager } from "@/components/ui/toast";
 import { Dialog, DialogContent, DialogDescription, DialogFooter,DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog.jsx'
 import { TextShimmer } from "@/components/ui/text-shimmer";
+import { TextEffect } from "@/components/ui/text-effect";
 
 export default function Note(){
     const [loading, setLoading] = useState(true)
@@ -191,10 +192,11 @@ export default function Note(){
                         <Button
                             className={'cursor-pointer'}
                             variant="ghost"
-                            disabled={closeTexarea ? true : false}
+                            // disabled={closeTexarea ? true : false}
                             onClick={addNote}
                         >
-                            {closeTexarea ? '' : <Plus/>}
+                            {/* {closeTexarea ? '' : <Plus/>} */}
+                            <Plus/>
                         </Button>
                     </div>
 
@@ -269,13 +271,19 @@ export default function Note(){
                                                 <DialogContent>
                                                     <DialogHeader>
                                                     <DialogTitle>AI Summary</DialogTitle>
-                                                    <DialogDescription className={'text-base'}>
-                                                        <TextShimmer className='font-mono text-sm' duration={1}>
-                                                            Summarizing...
-                                                        </TextShimmer>
-                                                        <br />
-                                                        {noteSummary}
-                                                    </DialogDescription>
+                                                    <div>
+                                                        <div className={'text-base'}>
+                                                            {
+                                                                noteSummary.length === 0 ? (<TextShimmer className='font-mono text-sm' duration={1}>
+                                                                    Summarizing...
+                                                                </TextShimmer>) : (<TextEffect per='char' preset='fade'>
+                                                                {noteSummary}
+                                                            </TextEffect>)
+                                                                
+                                                            }
+
+                                                        </div>
+                                                    </div>    
                                                     </DialogHeader>
                                                 </DialogContent>
                                             </Dialog>
