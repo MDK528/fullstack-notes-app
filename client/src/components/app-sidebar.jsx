@@ -93,7 +93,7 @@ export function AppSidebar() {
 
     <Sidebar collapsible="icon">
       <div className="flex justify-between mx-2 my-2">
-          { hide ?  <h1 className="text-xl ml-2">AI Note</h1> : ''}
+          { hide ?  <h1 className="text-xl ml-2">AI Notes</h1> : ''}
           <SidebarTrigger className={'cursor-pointer ml-0.5'} onClick={handleHide}/>
       </div>
       <SidebarContent >
