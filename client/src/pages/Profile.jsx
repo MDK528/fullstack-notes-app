@@ -43,7 +43,7 @@ function Profile()
                         <div>
                             <div className="grid gap-2 place-content-center">
                                 <img 
-                                    src={user === null ? 'https://www.nuflowerfoods.com/wp-content/uploads/2024/09/person-dummy.jpg':user.avatar} 
+                                    src={user === null ? '' || 'https://www.nuflowerfoods.com/wp-content/uploads/2024/09/person-dummy.jpg':user.avatar || 'https://www.nuflowerfoods.com/wp-content/uploads/2024/09/person-dummy.jpg'} 
                                     alt="img"
                                     className='border rounded-full h-25 w-25 object-cover' />
                             </div>
