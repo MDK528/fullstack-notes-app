@@ -47,7 +47,7 @@ function App()
               element={
                 <ProtectedRoute>
                   <Layout >
-                    <div className='px-4 mt-16 min-w-100 md:min-w-300'
+                    <div className='px-4 mt-16 min-w-106 md:min-w-300'
                     >
                       <Note />
                     </div>

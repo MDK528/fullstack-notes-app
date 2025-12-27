@@ -4,7 +4,7 @@ import Textarea from "@/components/Textarea";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, ChevronUp, Pencil, Plus, Save, Sparkles, Trash2 } from "lucide-react";
 import { toastManager } from "@/components/ui/toast";
-import { Dialog, DialogContent, DialogDescription, DialogFooter,DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog.jsx'
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter,DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog.jsx'
 import { TextShimmer } from "@/components/ui/text-shimmer";
 import { TextEffect } from "@/components/ui/text-effect";
 
@@ -272,11 +272,14 @@ export default function Note(){
                                                     <DialogHeader>
                                                     <DialogTitle>AI Summary</DialogTitle>
                                                     <div>
-                                                        <div className={'text-base'}>
+                                                        <div className={'text-base text-start'}>
                                                             {
-                                                                noteSummary.length === 0 ? (<TextShimmer className='font-mono text-sm' duration={1}>
-                                                                    Summarizing...
-                                                                </TextShimmer>) : (<TextEffect per='char' preset='fade'>
+                                                                noteSummary.length === 0 ? (
+                                                                    <TextShimmer className='font-mono text-sm' duration={1}>
+                                                                        Summarizing...
+                                                                    </TextShimmer>
+                                                                    
+                                                            ) : (<TextEffect per='char' preset='fade'>
                                                                 {noteSummary}
                                                             </TextEffect>)
                                                                 
