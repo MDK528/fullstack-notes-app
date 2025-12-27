@@ -84,8 +84,6 @@ const updateNote = asyncHandler(async(req, res)=>{
         }
     )
 
-    // console.log(updatedNote)
-
     if (!updatedNote) {
         return res
                 .status(404)
@@ -105,7 +103,6 @@ const updateNote = asyncHandler(async(req, res)=>{
 })
 
 const deleteNote = asyncHandler(async(req, res)=>{
-
     const deletedNote = await Note.findOneAndDelete(
         {
             _id: req.params.id,
@@ -123,7 +120,6 @@ const deleteNote = asyncHandler(async(req, res)=>{
             })
     }
 
-
     return res
             .status(200)
             .json({
@@ -140,8 +136,6 @@ const summarizeNote = asyncHandler(async(req, res)=>{
     })
 
     const user = await User.findById(req.user._id)
-    // console.log(req.user._id);
-    // console.log(user);
 
     if (!note) {
         return res.status(404).json({
@@ -171,9 +165,9 @@ const summarizeNote = asyncHandler(async(req, res)=>{
         response = await genAi.models.generateContent({
             model: "gemini-2.5-flash",
             config: {
-                systemInstruction: `You are a assistant to summarize the note of a user. Always reply to user with name like, Hello ${user.fullName}` 
+                systemInstruction: `You are a assistant to summarize the note of a user.` 
             },
-            contents: `Summarize the note in simple words with 1-2 sentences,
+            contents: `Summarize the note in simple words within 1-2 sentences,
             Note Title: ${note.noteTitle}
             Note Body: ${note.noteItem}
             `,
