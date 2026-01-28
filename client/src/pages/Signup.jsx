@@ -108,7 +108,7 @@ function Signup()
                                     id="username"
                                     name="userName"
                                     type="text"
-                                    placeholder="you@example"
+                                    placeholder="you123"
                                     value={formData.userName}
                                     onChange={handleChange}
                                 />

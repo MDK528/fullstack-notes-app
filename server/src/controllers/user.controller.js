@@ -3,6 +3,7 @@ import { User } from "../models/user.model.js"
 import { uploadOnCloudinary } from "../utils/cloudinary.js"
 import { sendOTPmail } from "../utils/sendOtpMail.js"
 import { OTP } from "../models/otp.model.js"
+import { sendOtp } from "../utils/sendOtp.js"
 
 const options = {
     httpOnly: true,
@@ -69,6 +70,14 @@ const registerUser = asyncHandler(async(req, res)=>{
     .catch((err)=>{
         console.log(err?.message || "Something went wrong while genrating OTP")
     })
+
+    // sendOtp(user.emailId, generatedOTP)
+    // .then(()=>{
+    //     console.log(`Your OTP generated successfully`)
+    // })
+    // .catch((err)=>{
+    //     console.log(err?.message || "Something went wrong while genrating OTP")
+    // })
 
     await OTP.create({
         emailId: emailId,
