@@ -9,17 +9,17 @@ const authService = {
             throw new Error ( error?.response?.data?.message || 'Registration failed' )
         }
     },
-    verifyOTP: async (otp)=>{
-        try {
-            const res = await apiInstance.post("/users/verify-otp", {otp})
-            console.log("oto", otp);
-            console.log(res.data);
+    // verifyOTP: async (otp)=>{
+    //     try {
+    //         const res = await apiInstance.post("/users/verify-otp", {otp})
+    //         console.log("oto", otp);
+    //         console.log(res.data);
             
-            return res.data
-        } catch (error) {
-            throw new Error ( error?.response?.data?.message || 'OTP verification failed' )
-        }
-    },
+    //         return res.data
+    //     } catch (error) {
+    //         throw new Error ( error?.response?.data?.message || 'OTP verification failed' )
+    //     }
+    // },
     login: async (credentials)=>{
         try {
             const res = await apiInstance.post("/users/login", credentials)

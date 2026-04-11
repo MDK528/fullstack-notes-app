@@ -50,8 +50,8 @@ function Signup()
             }
             
             await authService.register(submitData)
+            navigate('/home')
 
-            navigate('/signup/verify-otp')
         } catch (error) {
             toastManager.add({
                 title: "Error",
@@ -179,9 +179,11 @@ function Signup()
                                             <button
                                                 type="button"
                                                 onClick={() => {
+
                                                     setPreviewUrl(null);
                                                     setAvatarFile(null);
                                                     document.getElementById('file').value = '';
+                                                    
                                                 }}
                                                 className="h-8 w-8 rounded-full hover:bg-muted flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
                                             >

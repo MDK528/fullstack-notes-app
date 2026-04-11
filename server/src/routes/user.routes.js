@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { registerUser, loginUser, logoutUser, verifyUserWithOTP, fetchCurrentUser, changeCurrentPassword, updateUserProfile } from "../controllers/user.controller.js"
+import { registerUser, loginUser, logoutUser, fetchCurrentUser, changeCurrentPassword, updateUserProfile } from "../controllers/user.controller.js"
 import { upload } from "../middlewares/multer.middleware.js"
 import { validate } from "../middlewares/validation.middleware.js"
 import { registerSchema } from "../schemas/register.schema.js"
@@ -14,10 +14,6 @@ router.route("/register").post(
     registerUser
 )
 
-router.route("/verify-otp").post(
-    upload.none(),
-    verifyUserWithOTP
-)
 
 router.route("/login").post(
     upload.none(),
@@ -25,7 +21,6 @@ router.route("/login").post(
     loginUser
 )
 
-// secure routes
 router.route("/logout").post(verifyJWT, logoutUser)
 router.route("/profile").get(verifyJWT, fetchCurrentUser)
 router.route("/change-password").patch(upload.none(),verifyJWT, changeCurrentPassword) // it will deselect

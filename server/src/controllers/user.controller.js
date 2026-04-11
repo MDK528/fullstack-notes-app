@@ -56,96 +56,24 @@ const registerUser = asyncHandler(async(req, res)=>{
         userName,
         password,
         avatar: response?.url || "",
-        isVerified: false,
+        isVerified: true,
     })
 
     const createdUser = await User.findById(user._id).select("-password")
 
-    const generatedOTP = Math.floor(100000+(Math.random()*900000))
 
-    sendOTPmail(user.emailId, generatedOTP)
-    .then(()=>{
-        console.log(`Your OTP generated successfully`)
-    })
-    .catch((err)=>{
-        console.log(err?.message || "Something went wrong while genrating OTP")
-    })
+    const {accesstoken, refreshtoken} = await generateAccessTokenAndRefreshToken(user._id)
 
-    // sendOtp(user.emailId, generatedOTP)
-    // .then(()=>{
-    //     console.log(`Your OTP generated successfully`)
-    // })
-    // .catch((err)=>{
-    //     console.log(err?.message || "Something went wrong while genrating OTP")
-    // })
-
-    await OTP.create({
-        emailId: emailId,
-        otp: generatedOTP,
-        expiresAt: new Date(Date.now() + 5 * 60 * 1000),
-        owner: user._id
-    })
 
     return res
             .status(201)
+            .cookie("accesstoken", accesstoken, options)
+            .cookie("refreshtoken", refreshtoken, options)
             .json({
                 "success": true,
                 "message": "User Register successfully",
                 "data": createdUser
             })
-})
-
-const verifyUserWithOTP = asyncHandler(async(req, res)=>{
-    const {otp} = req.body
-
-    if (!otp) {
-        return res.status(404).json({
-            "success": false,
-            "message": "Please enter your otp"
-        })
-    }
-
-    const dbOTP = await OTP.findOne({otp})
-  
-    if (!dbOTP) {
-        return res.status(400).json({
-            "success": false,
-            "message": "Please enter valid otp"
-        })
-    }
-
-    if (new Date() > dbOTP.expiresAt) {
-        return res.status(400).json({
-            "success": false,
-            "message": "Your OTP expired"
-        })
-    }
-
-    const user = await User.findByIdAndUpdate(
-        dbOTP.owner,
-        {
-            $set: {
-                isVerified: true
-            }
-        },
-        {
-            new: true
-        }
-    )
-
-    // must delete otp doc after verification
-
-    const {accesstoken, refreshtoken} = await generateAccessTokenAndRefreshToken(user._id)
-
-    return res
-            .status(200)
-            .cookie("accesstoken", accesstoken, options)
-            .cookie("refreshtoken", refreshtoken, options)
-            .json({
-                "success": true,
-                "message": "Your OTP verification successfull"
-            })
-
 })
 
 const loginUser = asyncHandler(async(req, res)=>{
@@ -171,14 +99,6 @@ const loginUser = asyncHandler(async(req, res)=>{
 
     const user = await User.findById(isUserExist._id).select("-password")
     
-    if (user.isVerified === false) {
-        return res
-        .status(403)
-        .json({
-            "success": false,
-            "message": "Please verify your account first"
-        })
-    }
 
     const {accesstoken, refreshtoken} = await generateAccessTokenAndRefreshToken(isUserExist._id)
 
@@ -293,4 +213,4 @@ const updateUserProfile = asyncHandler(async(req, res)=>{
 
 // })
 
-export { registerUser, verifyUserWithOTP, loginUser, logoutUser, fetchCurrentUser, changeCurrentPassword, updateUserProfile }
+export { registerUser, loginUser, logoutUser, fetchCurrentUser, changeCurrentPassword, updateUserProfile }
