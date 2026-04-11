@@ -3,7 +3,6 @@ import { User } from "../models/user.model.js"
 import { uploadOnCloudinary } from "../utils/cloudinary.js"
 import { sendOTPmail } from "../utils/sendOtpMail.js"
 import { OTP } from "../models/otp.model.js"
-import { sendOtp } from "../utils/sendOtp.js"
 
 const options = {
     httpOnly: true,
