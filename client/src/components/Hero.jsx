@@ -59,7 +59,7 @@ function Hero() {
           >
             Start Taking Notes<ArrowRight/>
           </Button>
-          <Button variant='outline' className={'border-rose-600 dark:border-rose-600 dark:text-foreground bg-background cursor-pointer mx-1'}>Wacth Demo</Button>
+          <Button variant='outline' className={'border-rose-600 dark:border-rose-600 dark:text-foreground bg-background cursor-pointer mx-1'}>Watch Demo</Button>
         </div>
 
         <div className="grid md:grid-cols-1 gap-6 mt-20 mx-4 py-6 text-left  place-content-center place-items-center">
